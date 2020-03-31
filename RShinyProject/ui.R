@@ -1,11 +1,20 @@
 
 library(shiny)
+library(png)
 
 
 shinyUI(fluidPage(
+    list(tags$head(HTML('<link rel="icon", href="MyIcon.png", 
+                                   type="image/png" />'))),
+    div(style="padding: 0px 0px; width: '100%'",
+        titlePanel(
+            title="", windowTitle="My Window Title"
+        )),
+    
+    fluidPage(
     navbarPage(
         
-        "007 Movie Series Performance",
+        title=div(img(src="007Logo.png",height=50,width=100), "James Bond Performance"),
         tabPanel("Movie Comparsion ",
 
     # Sidebar with a slider input for number of bins
@@ -28,14 +37,15 @@ shinyUI(fluidPage(
                            "glm", width = "700px", height = "600px"
                        )),
                 column(6,
-                       DT::dataTableOutput("dataSet"))
+                       # DT::dataTableOutput("dataSet"))
+                       img(src = "007Logo.png", height = 80 , width = 400)
               
             ))
                          
             )
         )
-    ),
+    )),
     tabPanel("James Bond Actors", "This panel is intentionally left blank"),
     tabPanel("Behind the 007", "This panel is intentionally left blank")
-        )
-    ))
+        
+    ))))

@@ -17,11 +17,11 @@ library(recommenderlab)
 
 
 #read csvs
-movies <- read_csv("/www/data/tmdb_5000_movies.csv", na="NA")
-credits <- read_csv("/www/data/tmdb_5000_credits.csv",  na="NA")
-oscars <- read_csv("/www/data/oscar.csv",  na="NA")
-Coolcars <- read_csv("/www/data/cars.csv")
-Kills <- read_csv("/www/data/Kills per Bond movie.csv",  na="NA")
+movies <- read_csv("www/data/tmdb_5000_movies.csv", na="NA")
+credits <- read_csv("www/data/tmdb_5000_credits.csv",  na="NA")
+oscars <- read_csv("www/data/oscar.csv",  na="NA")
+Coolcars <- read_csv("www/data/cars.csv")
+Kills <- read_csv("www/data/Kills per Bond movie.csv",  na="NA")
 
 
 #loading data

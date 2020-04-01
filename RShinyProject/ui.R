@@ -49,7 +49,7 @@ shinyUI(fluidPage(
                      )
                  )
         ),
-        tabPanel("James Bond Actors", 
+        tabPanel("The Bonds", 
                  sidebarLayout(
                      sidebarPanel(
                          h4("Actors"),
@@ -92,6 +92,6 @@ shinyUI(fluidPage(
                          
                      )
                  ),
-        tabPanel("Behind the 007", "This panel is intentionally left blank")
+        tabPanel("007 Elements", "This panel is intentionally left blank")
     )
 ))

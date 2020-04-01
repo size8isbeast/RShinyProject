@@ -40,7 +40,7 @@ shinyUI(fluidPage(
                                                br(),
                                         ),
                                         column(3, offset = 3,
-                                               img(src="www/007Logo.png",
+                                               img(src="007Logo.png",
                                                  height=50,width=100 )
                                         )))
                              

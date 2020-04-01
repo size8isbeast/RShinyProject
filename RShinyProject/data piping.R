@@ -17,8 +17,8 @@ library(recommenderlab)
 
 
 
-movies <- read_csv("C:/Users/onepi/Documents/NEU/IE6600/Final Project/Data/tmdb_5000_movies.csv", na="NA")
-credits <- read_csv("C:/Users/onepi/Documents/NEU/IE6600/Final Project/Data/tmdb_5000_credits.csv",  na="NA")
+movies <- read_csv("~/RShinyProject/RShinyProject/www/data/tmdb_5000_movies.csv", na="NA")
+credits <- read_csv("~/RShinyProject/RShinyProject/www/data/tmdb_5000_credits.csv",  na="NA")
 
 
 

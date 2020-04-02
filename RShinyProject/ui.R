@@ -92,6 +92,17 @@ shinyUI(fluidPage(
                          
                      )
                  ),
-        tabPanel("007 Elements", "This panel is intentionally left blank")
-    )
-))
+        tabPanel("007 Elements", fluidPage(fluidRow(
+            column(6,
+                   plotOutput(
+                       "car", width = "700px", height = "600px"
+                   )),
+            column(6,
+                   plotOutput(
+                       "kill", width = "700px", height = "600px"
+                 ))
+            
+        ))
+    ))
+)
+)

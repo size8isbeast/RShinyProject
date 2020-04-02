@@ -3,9 +3,10 @@ library(shiny)
 library(shinyWidgets)
 
 
-shinyUI(fluidPage(
+
+shinyUI(tagList(
+    tags$head(tags$script(type="text/javascript", src ="code.js")),
     navbarPage(
-        
        title="James Bond Performance",
            
         tabPanel("Movie Comparsion ",

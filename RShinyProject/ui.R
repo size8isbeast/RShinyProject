@@ -1,11 +1,15 @@
 
 library(shiny)
 library(shinyWidgets)
+#install.packages("shinythemes")
+library(shinythemes)
 
 
 
-shinyUI(tagList(
-    tags$head(tags$script(type="text/javascript", src ="code.js")),
+shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
+    tags$head(tags$script(type="text/javascript", src ="code.js"),
+              
+    )),
     navbarPage(
        title="James Bond Performance",
            
@@ -121,7 +125,6 @@ shinyUI(tagList(
 ))
 )
 ))
-
 
 
 

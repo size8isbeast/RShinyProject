@@ -48,5 +48,4 @@ cast <- S007_credit %>%
 
 
 
-glimpse(S007)
 

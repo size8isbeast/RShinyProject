@@ -6,13 +6,14 @@ library(shinythemes)
 
 
 
+
 shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
     tags$head(tags$script(type="text/javascript", src ="code.js"),
               
     )),
     navbarPage(
-       title="James Bond Performance",
-           
+        title="James Bond Performance",
+        
         tabPanel("Movie Comparsion ",
                  
                  # Sidebar with a slider input for number of bins
@@ -24,15 +25,20 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                          
                          sliderInput("year", "Year released", 1962, 2015, value = c(1962, 2015),
                                      sep = ""),
-                         sliderInput("budget", "Budget (millions)", 0, 1000, c(0, 1000), step = 1),
+                         sliderInput("budget", "Budget (millions)", 0, 1000, c(0, 1000)),
                          sliderInput("revenue", "Revenue (millions)",
-                                     0, 1000, c(0, 1000), step = 1),
+                                     0, 1000, c(0, 1000)),
                          awesomeCheckbox(
                              inputId = "aw",
                              label = "Oscar Award?", 
                              value = TRUE
+                         ),
+                         wellPanel(
+                             selectInput("xvar", "X-axis variable", axis_vars, selected = "budget"),
+                             selectInput("yvar", "Y-axis variable", axis_vars, selected = "revenue"),
+                             
                          )
-                        ),
+                     ),
                      
                      mainPanel(
                          fluidPage(fluidRow(
@@ -47,7 +53,7 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                                         ),
                                         column(3, offset = 3,
                                                img(src="007Logo.png",
-                                                 height=50,width=100 )
+                                                   height=50,width=100 )
                                         )))
                              
                          ))
@@ -58,13 +64,13 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
         tabPanel("The Bonds", 
                  sidebarLayout(
                      sidebarPanel(
-                     
-            
+                         
+                         
                          checkboxGroupInput(
                              inputId = "checkGroup",
                              h4("Actors"),
                              choices = list(
-                              
+                                 
                                  "Sean Connery" = 1,
                                  "David Niven" = 2,
                                  "George Lazenby" = 3,
@@ -92,42 +98,37 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                                         ),
                                         column(3, offset = 3,
                                                imageOutput("myImage") )
-                                        )))
+                                    )))
                              
                          ))
-                         
-                     )
-                 ),
-       navbarMenu("007 Elements",
-                  tabPanel("Automobile",
-                           fluidPage(fluidRow(
-            column(6,
-                   plotOutput(
-                       "auto", width = "700px", height = "600px"
-                   )),
-            column(6,
-                   p("This is text for automobile"
-                       
-                 ))
-            
-        ))
-    ),tabPanel("Country",
-               fluidPage(fluidRow(
-                   column(6,
-                          plotOutput(
-                              "country", width = "700px", height = "600px"
-                          )),
-                   column(6,
-                          p("This is text for country"
-                            
-                          ))
+                     
+                 )
+        ),
+        navbarMenu("007 Elements",
+                   tabPanel("Automobile",
+                            fluidPage(fluidRow(
+                                column(6,
+                                       plotOutput(
+                                           "auto", width = "700px", height = "600px"
+                                       )),
+                                column(6,
+                                       p("This is text for automobile"
+                                         
+                                       ))
+                                
+                            ))
+                   ),tabPanel("Country",
+                              fluidPage(fluidRow(
+                                  column(6,
+                                         plotOutput(
+                                             "country", width = "700px", height = "600px"
+                                         )),
+                                  column(6,
+                                         p("This is text for country"
+                                           
+                                         ))
+                              )
+                              )
+                   ))
     )
-)
 ))
-)
-))
-
-
-
-
-

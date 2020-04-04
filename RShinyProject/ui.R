@@ -1,4 +1,4 @@
-
+library(ggvis)
 library(shiny)
 library(shinyWidgets)
 #install.packages("shinythemes")
@@ -11,33 +11,34 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
               
     )),
     navbarPage(
-       title="James Bond Performance",
-           
+        title="James Bond Performance",
+        
         tabPanel("Movie Comparsion ",
                  
                  # Sidebar with a slider input for number of bins
                  sidebarLayout(
                      sidebarPanel(
                          h4("Filter"),
+                         sliderInput("rating", "Movie average Rating",
+                                     5.7, 10, 5.7, step = 0.1),
                          
-                         sliderInput("year", "Year released", 1940, 2014, value = c(1970, 2014),
+                         sliderInput("year", "Year released", 1962, 2015, value = c(1962, 2015),
                                      sep = ""),
-                         sliderInput("budget", "Budget (millions)", 0, 800, c(0, 800), step = 1),
-                         sliderInput("boxoffice", "Dollars at Box Office (millions)",
-                                     0, 800, c(0, 800), step = 1),
+                         sliderInput("budget", "Budget (millions)", 0, 1000, c(0, 1000), step = 1),
+                         sliderInput("revenue", "Revenue (millions)",
+                                     0, 1000, c(0, 1000), step = 1),
                          awesomeCheckbox(
                              inputId = "aw",
-                             label = "Award?", 
+                             label = "Oscar Award?", 
                              value = TRUE
                          )
-                        ),
+                     ),
                      
                      mainPanel(
                          fluidPage(fluidRow(
                              column(6,
-                                    plotOutput(
-                                        "plot", width = "700px", height = "600px"
-                                    )),
+                                    ggvisOutput(
+                                        "plot")),
                              column(6,
                                     DT::dataTableOutput("dataSet"),
                                     fluidRow(
@@ -46,7 +47,7 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                                         ),
                                         column(3, offset = 3,
                                                img(src="007Logo.png",
-                                                 height=50,width=100 )
+                                                   height=50,width=100 )
                                         )))
                              
                          ))
@@ -57,13 +58,13 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
         tabPanel("The Bonds", 
                  sidebarLayout(
                      sidebarPanel(
-                         h4("Actors"),
                          
-                         selectInput(
-                             "select",
-                             h4("Which Era of 007?"),
+                         
+                         checkboxGroupInput(
+                             inputId = "checkGroup",
+                             h4("Actors"),
                              choices = list(
-                                 " "=" ",
+                                 
                                  "Sean Connery" = 1,
                                  "David Niven" = 2,
                                  "George Lazenby" = 3,
@@ -91,42 +92,37 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                                         ),
                                         column(3, offset = 3,
                                                imageOutput("myImage") )
-                                        )))
+                                    )))
                              
                          ))
-                         
-                     )
-                 ),
-       navbarMenu("007 Elements",
-                  tabPanel("Automobile",
-                           fluidPage(fluidRow(
-                               column(6,
-                                      plotOutput(
-                                          "auto", width = "700px", height = "600px"
-                                      )),
-                               column(6,
-                                      p("This is text for automobile"
-                                        
-                                      ))
-                               
-                           ))
-    ),tabPanel("Kill",
-               fluidPage(fluidRow(
-                   column(6,
-                          plotOutput(
-                              "kill", width = "700px", height = "600px"
-                          )),
-                   column(6,
-                          p("This is text for kill"
-                            
-                          ))
+                     
+                 )
+        ),
+        navbarMenu("007 Elements",
+                   tabPanel("Automobile",
+                            fluidPage(fluidRow(
+                                column(6,
+                                       plotOutput(
+                                           "auto", width = "700px", height = "600px"
+                                       )),
+                                column(6,
+                                       p("This is text for automobile"
+                                         
+                                       ))
+                                
+                            ))
+                   ),tabPanel("Country",
+                              fluidPage(fluidRow(
+                                  column(6,
+                                         plotOutput(
+                                             "country", width = "700px", height = "600px"
+                                         )),
+                                  column(6,
+                                         p("This is text for country"
+                                           
+                                         ))
+                              )
+                              )
+                   ))
     )
-)
 ))
-)
-))
-
-
-
-
-

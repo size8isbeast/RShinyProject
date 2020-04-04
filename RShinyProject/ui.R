@@ -1,8 +1,9 @@
-
+library(ggvis)
 library(shiny)
 library(shinyWidgets)
 #install.packages("shinythemes")
 library(shinythemes)
+
 
 
 
@@ -19,25 +20,31 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                  sidebarLayout(
                      sidebarPanel(
                          h4("Filter"),
+                         sliderInput("rating", "Movie average Rating",
+                                     5.7, 10, 5.7, step = 0.1),
                          
-                         sliderInput("year", "Year released", 1940, 2014, value = c(1970, 2014),
+                         sliderInput("year", "Year released", 1962, 2015, value = c(1962, 2015),
                                      sep = ""),
-                         sliderInput("budget", "Budget (millions)", 0, 800, c(0, 800), step = 1),
-                         sliderInput("boxoffice", "Dollars at Box Office (millions)",
-                                     0, 800, c(0, 800), step = 1),
+                         sliderInput("budget", "Budget (millions)", 0, 1000, c(0, 1000)),
+                         sliderInput("revenue", "Revenue (millions)",
+                                     0, 1000, c(0, 1000)),
                          awesomeCheckbox(
                              inputId = "aw",
-                             label = "Award?", 
+                             label = "Oscar Award?", 
                              value = TRUE
+                         ),
+                         wellPanel(
+                             selectInput("xvar", "X-axis variable", axis_vars, selected = "budget"),
+                             selectInput("yvar", "Y-axis variable", axis_vars, selected = "revenue"),
+                          
                          )
                         ),
                      
                      mainPanel(
                          fluidPage(fluidRow(
                              column(6,
-                                    plotOutput(
-                                        "plot", width = "700px", height = "600px"
-                                    )),
+                                    ggvisOutput(
+                                        "plot")),
                              column(6,
                                     DT::dataTableOutput("dataSet"),
                                     fluidRow(
@@ -57,13 +64,13 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
         tabPanel("The Bonds", 
                  sidebarLayout(
                      sidebarPanel(
-                         h4("Actors"),
-                         
-                         selectInput(
-                             "select",
-                             h4("Which Era of 007?"),
+                     
+            
+                         checkboxGroupInput(
+                             inputId = "checkGroup",
+                             h4("Actors"),
                              choices = list(
-                                 " "=" ",
+                              
                                  "Sean Connery" = 1,
                                  "David Niven" = 2,
                                  "George Lazenby" = 3,
@@ -98,26 +105,26 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                      )
                  ),
        navbarMenu("007 Elements",
-                  tabPanel("Car",
+                  tabPanel("Automobile",
                            fluidPage(fluidRow(
             column(6,
                    plotOutput(
-                       "car", width = "700px", height = "600px"
+                       "auto", width = "700px", height = "600px"
                    )),
             column(6,
-                   p("This is text for cars"
+                   p("This is text for automobile"
                        
                  ))
             
         ))
-    ),tabPanel("Kill",
+    ),tabPanel("Country",
                fluidPage(fluidRow(
                    column(6,
                           plotOutput(
-                              "kill", width = "700px", height = "600px"
+                              "country", width = "700px", height = "600px"
                           )),
                    column(6,
-                          p("This is text for kill"
+                          p("This is text for country"
                             
                           ))
     )

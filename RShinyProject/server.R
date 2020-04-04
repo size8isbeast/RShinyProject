@@ -43,8 +43,11 @@ shinyServer(function(input, output,session) {
         rating <- input$rating
         minyear <- input$year[1]
         maxyear <- input$year[2]
-        
-        # award<-input$aw
+        minbudget<-input$budget[1] * 1e6
+        maxbudget<-input$budget[2]* 1e6
+        minrevenue <- input$revenue[1]* 1e6 
+        maxrevenue <- input$revenue[2]* 1e6 
+        award<-input$aw
         
         # Apply filters
         m <- all_movies %>%
@@ -52,8 +55,11 @@ shinyServer(function(input, output,session) {
                 vote_average >= rating,
                 year >= minyear,
                 year <= maxyear,
-                
-                # ,award==award
+                budget>= minbudget,
+                budget <= maxbudget,
+                revenue >= minrevenue,
+                revenue <= maxrevenue,
+                award==award
             ) 
         
         
@@ -64,8 +70,8 @@ shinyServer(function(input, output,session) {
         # Add column which says whether the movie won any Oscars
         # Be a little careful in case we have a zero-row data frame
         m$has_oscar <- character(nrow(m))
-        # m$has_oscar[m$award == 0] <- "No"
-        # m$has_oscar[m$award == 1] <- "Yes"
+        m$has_oscar[m$award == 0] <- "No"
+        m$has_oscar[m$award == 1] <- "Yes"
         m
     })
     

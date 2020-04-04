@@ -25,7 +25,9 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                          
                          sliderInput("year", "Year released", 1962, 2015, value = c(1962, 2015),
                                      sep = ""),
-                         
+                         sliderInput("budget", "Budget (millions)", 0, 1000, c(0, 1000)),
+                         sliderInput("revenue", "Revenue (millions)",
+                                     0, 1000, c(0, 1000)),
                          awesomeCheckbox(
                              inputId = "aw",
                              label = "Oscar Award?", 

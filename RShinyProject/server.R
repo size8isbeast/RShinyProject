@@ -94,8 +94,6 @@ shinyServer(function(input, output) {
         
     })
     
-        output$Car <- renderD3tree2({d3tree(p, width = "80%",valueField = "size", height ="600px", rootname = "Favorite Brands")})
-    
     
     
     

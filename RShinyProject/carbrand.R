@@ -1,4 +1,14 @@
-
+#ui
+navbarMenu("007 Elements",
+           tabPanel("Car",
+                    fluidPage(fluidRow(
+                      titlePanel("007 Favorite Car Brand"),
+                      mainPanel(
+                        d3tree2Output("Car",width = "100%", height = "800px")
+                      )
+                    ))))
+#server
+output$Car <- renderD3tree2({d3tree(p, width = "80%",valueField = "size", height ="600px", rootname = "Favorite Brands")})
 
 # library
 library(treemap)

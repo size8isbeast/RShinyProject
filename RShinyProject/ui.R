@@ -100,16 +100,11 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
        navbarMenu("007 Elements",
                   tabPanel("Car",
                            fluidPage(fluidRow(
-            column(6,
-                   plotOutput(
-                       "car", width = "700px", height = "600px"
-                   )),
-            column(6,
-                   p("This is text for cars"
-                       
-                 ))
-            
-        ))
+                                titlePanel("007 Favorite Car Brand"),
+                                mainPanel(
+                                    d3tree2Output("Car",width = "100%", height = "800px")
+                                        )
+                            ))
     ),tabPanel("Kill",
                fluidPage(fluidRow(
                    column(6,

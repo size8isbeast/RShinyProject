@@ -10,29 +10,6 @@
 library(shiny)
 
 
-#installation 
-library(ggplot2)
-library(dplyr)
-library(tidyverse)
-library(scales)
-library(jsonlite)
-library(knitr)
-library(kableExtra)
-library(ggrepel)
-library(gridExtra)
-library(lubridate)
-library(tidytext)
-library(wordcloud)
-library(recommenderlab)
-
-
-library(ggvis)
-library(plotly)
-
-if (FALSE) {
-    library(ggvis)
-    library(dbplyr)
-}
 
 
 shinyServer(function(input, output,session) {
@@ -43,7 +20,7 @@ shinyServer(function(input, output,session) {
         rating <- input$rating
         minyear <- input$year[1]
         maxyear <- input$year[2]
-        minbudget<-input$budget[1] * 1e6
+        minbudget<-input$budget[1]* 1e6 
         maxbudget<-input$budget[2]* 1e6
         minrevenue <- input$revenue[1]* 1e6 
         maxrevenue <- input$revenue[2]* 1e6 

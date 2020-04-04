@@ -1,4 +1,27 @@
 
+#installation 
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(scales)
+library(jsonlite)
+library(knitr)
+library(kableExtra)
+library(ggrepel)
+library(gridExtra)
+library(lubridate)
+library(tidytext)
+library(wordcloud)
+library(recommenderlab)
+
+
+library(ggvis)
+library(plotly)
+
+if (FALSE) {
+  library(ggvis)
+  library(dbplyr)
+}
 #variable 
 axis_vars <- c(
   "budget" = "budget",

@@ -41,9 +41,7 @@ shinyUI(fluidPage(theme=shinytheme("cyborg"),tagList(
                          
                                     ggvisOutput(
                                         "plot")
-                             
-                             
-                         ),fluidRow(DT::dataTableOutput("dataSet")))
+         ),fluidRow(DT::dataTableOutput("dataSet") ))
                          
                      )
                  )

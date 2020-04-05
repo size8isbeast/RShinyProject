@@ -89,18 +89,34 @@ shinyServer(function(input, output,session) {
                           stroke = ~has_oscar,
                          key := ~id) %>%
             add_tooltip(movie_tooltip, "hover") %>%
-            add_axis("x", title = xvar_name) %>% 
-            add_axis("y", title = yvar_name) %>% 
-            add_legend("stroke", title = "Won Oscar", values = c("Yes", "No")) %>%
+            add_axis("x", title = xvar_name,title_offset = 50,
+                     properties = axis_props(
+                       title = list(fontSize = 16,fill = "white"),
+              labels = list(fontSize = 12, fill = "white",angle=45))) %>% 
+            add_axis("y", title = yvar_name,title_offset = 50,
+                     properties = axis_props(
+                       title = list(fontSize = 16,
+                                    fill = "white"),
+                labels = list(fontSize = 12, fill = "white"))) %>% 
+            add_legend("stroke", title = "Has Oscar", values = c("Yes", "No"), 
+                       properties = legend_props(
+              title = list(fontSize = 16,fill = "white"),
+              labels = list(fontSize = 12, fill = "white")
+            )) %>%
             scale_nominal("stroke", domain = c("Yes", "No"),
                           range = c("orange", "#aaa")) %>%
-            set_options(width = "350px", height = "500px")
+            set_options(width = "700px", height = "400px")
     })
     
     vis %>% bind_shiny("plot")
+    
+    
        
     output$dataSet <- DT::renderDataTable({
-        DT::datatable(all_movies[,c("title","year")])
+      dt<-all_movies[,c("title","year")]
+        DT::datatable(dt) %>%
+        formatStyle(names(dt),  
+                    color = 'white', backgroundColor = 'black', fontWeight = 'bold')
   
     })
 

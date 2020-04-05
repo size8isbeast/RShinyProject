@@ -104,7 +104,7 @@ shinyServer(function(input, output,session) {
               labels = list(fontSize = 12, fill = "white")
             )) %>%
             scale_nominal("stroke", domain = c("Yes", "No"),
-                          range = c("orange", "#aaa")) %>%
+                          range = c("#DAA520", "#aaa")) %>%
             set_options(width = "700px", height = "400px")
     })
     

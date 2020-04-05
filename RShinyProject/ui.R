@@ -3,11 +3,12 @@ library(shiny)
 library(shinyWidgets)
 #install.packages("shinythemes")
 library(shinythemes)
+library(DT)
 
 
 
 
-shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
+shinyUI(fluidPage(theme=shinytheme("cyborg"),tagList(
     tags$head(tags$script(type="text/javascript", src ="code.js"),
               
     )),
@@ -18,21 +19,16 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                  
                  # Sidebar with a slider input for number of bins
                  sidebarLayout(
-                     sidebarPanel(
+                     sidebarPanel(width=3,
                          h4("Filter"),
                          sliderInput("rating", "Movie average Rating",
                                      5.7, 10, 5.7, step = 0.1),
                          
                          sliderInput("year", "Year released", 1962, 2015, value = c(1962, 2015),
                                      sep = ""),
-                         sliderInput("budget", "Budget (millions)", 0, 1000, c(0, 1000)),
+                         sliderInput("budget", "Budget (millions)", 0, 300, c(0, 300)),
                          sliderInput("revenue", "Revenue (millions)",
-                                     0, 1000, c(0, 1000)),
-                         awesomeCheckbox(
-                             inputId = "aw",
-                             label = "Oscar Award?", 
-                             value = TRUE
-                         ),
+                                     0, 1200, c(0, 1200)),
                          wellPanel(
                              selectInput("xvar", "X-axis variable", axis_vars, selected = "budget"),
                              selectInput("yvar", "Y-axis variable", axis_vars, selected = "revenue"),
@@ -47,14 +43,7 @@ shinyUI(fluidPage(theme = shinytheme("cyborg"),tagList(
                                         "plot")),
                              column(6,
                                     DT::dataTableOutput("dataSet"),
-                                    fluidRow(
-                                        column(3, offset = 3,
-                                               br(),
-                                        ),
-                                        column(3, offset = 3,
-                                               img(src="007Logo.png",
-                                                 height=50,width=100 )
-                                        )))
+                                    )
                              
                          ))
                          

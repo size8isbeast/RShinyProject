@@ -74,4 +74,5 @@ mo<-S007_Year_Award %>% select(title,id,popularity,budget,revenue,vote_average,
                                year,award)
 all_movies<-S007_Year_Award %>% select(title,id,popularity,budget,revenue,vote_average,
                                        year,award)
-
+all_movies[,"budget"]<-all_movies[,"budget"]/1000000
+all_movies[,"revenue"]<-all_movies[,"revenue"]/1000000

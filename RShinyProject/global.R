@@ -1,3 +1,11 @@
+# The following code refered from  
+#Author:Winston Chang <winston@rstudio.com>
+#AuthorUrl: http://www.rstudio.com/
+# License: MIT
+# Type: Shiny
+# Tags: ggvis 
+
+
 
 #installation 
 library(ggplot2)
@@ -13,12 +21,7 @@ library(lubridate)
 library(tidytext)
 library(wordcloud)
 library(recommenderlab)
-# The following code refered from  
-#Winston Chang <winston@rstudio.com>
-#AuthorUrl: http://www.rstudio.com/
-# License: MIT
-# Type: Shiny
-# Tags: ggvis 
+
 
 
 

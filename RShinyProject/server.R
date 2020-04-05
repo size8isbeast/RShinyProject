@@ -105,7 +105,7 @@ shinyServer(function(input, output,session) {
             )) %>%
             scale_nominal("stroke", domain = c("Yes", "No"),
                           range = c("orange", "#aaa")) %>%
-            set_options(width = "700px", height = "400px")
+            set_options(width = "7·00px", height = "400px")
     })
     
     vis %>% bind_shiny("plot")

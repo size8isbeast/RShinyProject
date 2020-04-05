@@ -13,6 +13,14 @@ library(lubridate)
 library(tidytext)
 library(wordcloud)
 library(recommenderlab)
+# The following code refered from  
+#Winston Chang <winston@rstudio.com>
+#AuthorUrl: http://www.rstudio.com/
+# License: MIT
+# Type: Shiny
+# Tags: ggvis 
+
+
 
 
 library(ggvis)

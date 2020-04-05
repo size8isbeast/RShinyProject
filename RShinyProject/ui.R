@@ -38,14 +38,12 @@ shinyUI(fluidPage(theme=shinytheme("cyborg"),tagList(
                      
                      mainPanel(
                          fluidPage(fluidRow(
-                             column(6,
+                         
                                     ggvisOutput(
-                                        "plot")),
-                             column(6,
-                                    DT::dataTableOutput("dataSet"),
-                                    )
+                                        "plot")
                              
-                         ))
+                             
+                         ),fluidRow(DT::dataTableOutput("dataSet")))
                          
                      )
                  )

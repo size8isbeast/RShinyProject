@@ -9,6 +9,7 @@
 
 library(shiny)
 
+library(DT)
 
 
 
@@ -20,11 +21,11 @@ shinyServer(function(input, output,session) {
         rating <- input$rating
         minyear <- input$year[1]
         maxyear <- input$year[2]
-        minbudget<-input$budget[1]* 1e6 
-        maxbudget<-input$budget[2]* 1e6
-        minrevenue <- input$revenue[1]* 1e6 
-        maxrevenue <- input$revenue[2]* 1e6 
-        award<-input$aw
+        minbudget<-input$budget[1]
+        maxbudget<-input$budget[2]
+        minrevenue <- input$revenue[1]
+        maxrevenue <- input$revenue[2]
+       
         
         # Apply filters
         m <- all_movies %>%
@@ -36,7 +37,7 @@ shinyServer(function(input, output,session) {
                 budget <= maxbudget,
                 revenue >= minrevenue,
                 revenue <= maxrevenue,
-                award==award
+               
             ) 
         
         
@@ -63,17 +64,20 @@ shinyServer(function(input, output,session) {
         
         paste0("<b>", movie$title, "</b><br>",
                movie$year, "<br>",
-               "$", format(movie$revenue, big.mark = ",", scientific = FALSE),
-               "<br>","$", format(movie$budget, big.mark = ",", 
-                                  scientific = FALSE)
+               "Revenue (million $)",
+               format(movie$revenue, big.mark = ",", scientific = FALSE),
+               "<br>", 
+               "Budget (million $)",
+               format(movie$budget, big.mark = ",", scientific = FALSE)
+            
         )
     }
     
     # A reactive expression with the ggvis plot
     vis <- reactive({
         xvar_name <- names(axis_vars)[axis_vars == input$xvar]
-        yvar_name <- names(axis_vars)[axis_vars == input$yvar]
-        
+       yvar_name <- names(axis_vars)[axis_vars == input$yvar]
+        # 
         # Normally we could do something like props(x = ~BoxOffice, y = ~Reviews),
         # but since the inputs are strings, we need to do a little more work.
         xvar <- prop("x", as.symbol(input$xvar))
@@ -85,84 +89,104 @@ shinyServer(function(input, output,session) {
                           stroke = ~has_oscar,
                          key := ~id) %>%
             add_tooltip(movie_tooltip, "hover") %>%
-            add_axis("x", title = xvar_name) %>%
-            add_axis("y", title = yvar_name)%>%
-            add_legend("stroke", title = "Won Oscar", values = c("Yes", "No")) %>%
+            add_axis("x", title = xvar_name,title_offset = 50,
+                     properties = axis_props(
+                       title = list(fontSize = 16,fill = "white"),
+              labels = list(fontSize = 12, fill = "white",angle=45))) %>% 
+            add_axis("y", title = yvar_name,title_offset = 50,
+                     properties = axis_props(
+                       title = list(fontSize = 16,
+                                    fill = "white"),
+                labels = list(fontSize = 12, fill = "white"))) %>% 
+            add_legend("stroke", title = "Has Oscar", values = c("Yes", "No"), 
+                       properties = legend_props(
+              title = list(fontSize = 16,fill = "white"),
+              labels = list(fontSize = 12, fill = "white")
+            )) %>%
             scale_nominal("stroke", domain = c("Yes", "No"),
-                          range = c("orange", "#aaa")) %>%
-            set_options(width = 500, height = 500)
+                          range = c("#DAA520", "#aaa")) %>%
+            set_options(width = "700px", height = "400px")
     })
     
     vis %>% bind_shiny("plot")
     
- 
+    
+       
+    output$dataSet <- DT::renderDataTable({
+      dt<-all_movies %>% 
+        filter(
+          vote_average>= input$rating,year >= input$year[1]&year <= input$year[2],
+          budget>= input$budget[1]& budget <= input$budget[2],
+          revenue >= input$revenue[1]&revenue <= input$revenue[2]
+      
+        ) 
+      dt<-dt[,c('title','year')]
+        DT::datatable(dt) %>%
+        formatStyle(names(dt),  
+                    color = 'white', backgroundColor = 'black', fontWeight = 'bold')
+  
+    })
 
-        
-        
-    # output$dataSet <- DT::renderDataTable({
-    #     DT::datatable(cars)
-    # })
-    # 
-    # output$graph<- renderPlot({
-    #     
-    #     
-    #     
-    #     
-    #     
-    # })
-    # 
-    # output$actor <- DT::renderDataTable({
-    #     DT::datatable(actor)
-    # })
-    # 
-    # output$myImage <- renderImage({
-    #     if (is.null(input$picture))
-    #         return(NULL)
-    #     
-    #     if (input$picture == "face") {
-    #         return(list(
-    #             src = "images/face.png",
-    #             contentType = "image/png",
-    #             alt = "Face"
-    #         ))
-    #     } else if (input$picture == "chainring") {
-    #         return(list(
-    #             src = "images/chainring.jpg",
-    #             filetype = "image/jpeg",
-    #             alt = "This is a chainring"
-    #         ))
-    #     }
-    #     
-    # }, deleteFile = FALSE)
-    # 
-    # output$auto<- renderPlot({
-    #     
-    #     # generate bins based on input$bins from ui.R
-    #     x    <- faithful[, 2]
-    #     bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    #     
-    #     # draw the histogram with the specified number of bins
-    #     hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    #     
-    #     
-    #     
-    #     
-    # })
-    # 
-    # output$country<- renderPlot({
-    #     
-    #     # generate bins based on input$bins from ui.R
-    #     x    <- faithful[, 2]
-    #     bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    #     
-    #     # draw the histogram with the specified number of bins
-    #     hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    #     
-    #     
-    #     
-    #     
-    # })
-    # 
+    output$graph<- renderPlot({
+
+
+
+
+
+    })
+
+    output$actor <- DT::renderDataTable({
+        DT::datatable(actor)
+    })
+
+    output$myImage <- renderImage({
+        if (is.null(input$picture))
+            return(NULL)
+
+        if (input$picture == "face") {
+            return(list(
+                src = "images/face.png",
+                contentType = "image/png",
+                alt = "Face"
+            ))
+        } else if (input$picture == "chainring") {
+            return(list(
+                src = "images/chainring.jpg",
+                filetype = "image/jpeg",
+                alt = "This is a chainring"
+            ))
+        }
+
+    }, deleteFile = FALSE)
+
+    output$auto<- renderPlot({
+
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+        # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+
+
+
+
+    })
+
+    output$country<- renderPlot({
+
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+        # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+
+
+
+
+    })
+
     
     
     

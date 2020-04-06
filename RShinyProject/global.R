@@ -1,3 +1,11 @@
+# The following code refered from  
+#Author:Winston Chang <winston@rstudio.com>
+#AuthorUrl: http://www.rstudio.com/
+# License: MIT
+# Type: Shiny
+# Tags: ggvis 
+
+
 
 #installation 
 library(ggplot2)
@@ -13,6 +21,9 @@ library(lubridate)
 library(tidytext)
 library(wordcloud)
 library(recommenderlab)
+
+
+
 
 
 library(ggvis)
@@ -74,4 +85,5 @@ mo<-S007_Year_Award %>% select(title,id,popularity,budget,revenue,vote_average,
                                year,award)
 all_movies<-S007_Year_Award %>% select(title,id,popularity,budget,revenue,vote_average,
                                        year,award)
-
+all_movies[,"budget"]<-all_movies[,"budget"]/1000000
+all_movies[,"revenue"]<-all_movies[,"revenue"]/1000000

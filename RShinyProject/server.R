@@ -147,15 +147,18 @@ shinyServer(function(input, output,session) {
       
       
       colors_border <- coul
+      par(bg = "black")
       radarchart( df(), axistype=0 , maxmin=F,
                   #custom polygon
                   pcol=colors_border , pfcol=colors_in,plwd=3, plty=2,
                   #custom the grid
-                  cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8, 
+                  cglcol="white", cglty=1, axislabcol="white", cglwd=0.8,
+                  
                   #custom labels
                   vlcex=1) 
+      
       legend(1.1, 1.1, legend = rownames(tab2_bonds), 
-             col = colors_border, 
+             col = colors_border, text.col = "white",
              seg.len = 2, border = "transparent",
              pch = 16, lty = 1)
       

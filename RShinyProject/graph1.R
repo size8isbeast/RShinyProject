@@ -60,8 +60,8 @@ S007_Year_Award$award[is.na(S007_Year_Award$award)]<-0
 
 all_movies<-S007_Year_Award %>% select(title,id,popularity,budget,revenue,vote_average,
                                        year,award)
-
-
+all_movies[,"budget"]<-all_movies[,"budget"]/1000000
+all_movies[,"revenue"]<-all_movies[,"revenue"]/1000000
 # ##Theme
 # 
 # theme_black = function(base_size = 12, base_family = "") {

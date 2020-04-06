@@ -56,36 +56,30 @@ shinyUI(fluidPage(theme=shinytheme("cyborg"),tagList(
                              h4("Actors"),
                              choices = list(
                               
-                                 "Sean Connery" = 1,
-                                 "David Niven" = 2,
-                                 "George Lazenby" = 3,
-                                 "Roger Moore" = 4,
-                                 "Timothy Dalton" = 5,
-                                 "Pierce Brosnan" = 6,
-                                 "Daniel Craig" = 7
+                                 'Daniel Craig'='Daniel.Craig',
+                                 'George Lazenby'= 'George.Lazenby',
+                                 'Pierce Brosnan'='Pierce.Brosnan',
+                                 'Roger Moore'='Roger.Moore',
+                                 'Sean Connery'='Sean.Connery',
+                                 'Timothy Dalton'='Timothy.Dalton'
                                  
                              ),
-                             selected = " "
-                         )
+                             selected = c('Daniel.Craig',
+                                          'George.Lazenby',
+                                          'Pierce.Brosnan',
+                                          'Roger.Moore',
+                                          'Sean.Connery',
+                                          'Timothy.Dalton')
+                         ),
+                         uiOutput("selected_num")
                      ),
                      
                      mainPanel(
-                         fluidPage(fluidRow(
-                             column(6,
-                                    plotOutput(
-                                        "graph", width = "700px", height = "600px"
-                                    )),
-                             column(6,
-                                    DT::dataTableOutput("actor"),
-                                    fluidRow(
-                                        column(3, offset = 3,
-                                               br(),
-                                        ),
-                                        column(3, offset = 3,
-                                               imageOutput("myImage") )
-                                        )))
-                             
-                         ))
+                         
+                         plotOutput("radarplot")
+                         
+                     )   
+                        
                          
                      )
                  ),

@@ -127,37 +127,44 @@ shinyServer(function(input, output,session) {
   
     })
 
-    output$graph<- renderPlot({
-
-
-
-
-
+    
+    
+    df<-reactive({
+      tab2_bonds %>% select(input$checkbox)
     })
-
-    output$actor <- DT::renderDataTable({
-        DT::datatable(actor)
+    
+    
+    output$selected_num<-renderUI({
+      if(length(input$checkbox)<3){
+        h6(helpText(code("Please choose at least 3 Actors"),style="font-family: 'times'; font-si16pt"))
+        
+      }
     })
+    
+    
+    output$radarplot<-renderPlot({
+      coul <- brewer.pal(10, "RdBu")
+      colors_in <- alpha(coul,0.3)
+      
+      
+      
+      colors_border <- coul
+      radarchart( df(), axistype=0 , maxmin=F,
+                  #custom polygon
+                  pcol=colors_border , pfcol=colors_in,plwd=3, plty=2,
+                  #custom the grid
+                  cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8, 
+                  #custom labels
+                  vlcex=1)
+      legend(1.4, 1.25, legend = rownames(tab2_bonds), col = colors_border, seg.len = 2, border = "transparent", pch = 16, lty = 1)
+      
+    })
+    
+    
+   
 
-    output$myImage <- renderImage({
-        if (is.null(input$picture))
-            return(NULL)
-
-        if (input$picture == "face") {
-            return(list(
-                src = "images/face.png",
-                contentType = "image/png",
-                alt = "Face"
-            ))
-        } else if (input$picture == "chainring") {
-            return(list(
-                src = "images/chainring.jpg",
-                filetype = "image/jpeg",
-                alt = "This is a chainring"
-            ))
-        }
-
-    }, deleteFile = FALSE)
+   
+              
 
     output$auto<- renderPlot({
 

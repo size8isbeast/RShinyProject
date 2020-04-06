@@ -113,7 +113,14 @@ shinyServer(function(input, output,session) {
     
        
     output$dataSet <- DT::renderDataTable({
-      dt<-all_movies[,c("title","year")]
+      dt<-all_movies %>% 
+        filter(
+          vote_average>= input$rating,year >= input$year[1]&year <= input$year[2],
+          budget>= input$budget[1]& budget <= input$budget[2],
+          revenue >= input$revenue[1]&revenue <= input$revenue[2]
+      
+        ) 
+      dt<-dt[,c('title','year')]
         DT::datatable(dt) %>%
         formatStyle(names(dt),  
                     color = 'white', backgroundColor = 'black', fontWeight = 'bold')

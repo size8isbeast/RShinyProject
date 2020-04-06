@@ -52,7 +52,7 @@ shinyUI(fluidPage(theme=shinytheme("cyborg"),tagList(
                      
             
                          checkboxGroupInput(
-                             inputId = "checkGroup",
+                             inputId = "checkbox",
                              h4("Actors"),
                              choices = list(
                               

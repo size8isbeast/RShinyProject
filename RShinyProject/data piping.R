@@ -26,6 +26,8 @@ Coolcars <- read_csv("www/data/cars.csv")
 Kills <- read_csv("www/data/Kills per Bond movie.csv",  na="NA")
 
 
+
+
 #loading data
 S007_movie <- movies %>%
   filter(id %in% c(710,714,707,658,657,646,699,709,253,660,36643,668,691,698,682,681,708,12208

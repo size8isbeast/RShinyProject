@@ -73,7 +73,8 @@ cast <- S007_credit %>%
   select(-cast, -crew, -credit_id) %>%
   rename(actor=name, movie_cast_id=cast_id, actor_id=id) %>%
   mutate_if(is.character, factor) %>%
-  filter(order == 0)
+  filter(order == 0) 
+cast$title<-as.character(cast$title)
 
 #data cleaning-graph1
 #join award and movie

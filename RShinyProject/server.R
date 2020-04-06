@@ -36,7 +36,7 @@ shinyServer(function(input, output,session) {
                 budget>= minbudget,
                 budget <= maxbudget,
                 revenue >= minrevenue,
-                revenue <= maxrevenue,
+                revenue <= maxrevenue
                
             ) 
         
@@ -126,13 +126,15 @@ shinyServer(function(input, output,session) {
                     color = 'white', backgroundColor = 'black', fontWeight = 'bold')
   
     })
+    
+    
     df<-reactive({
       tab2_bonds %>% select(input$checkbox)
     })
     
     
     output$selected_num<-renderUI({
-      if(length(input$checkbox)<3){
+      if(length(df())<3){
         h6(helpText(code("Please choose at least 3 Actors"),style="font-family: 'times'; font-si16pt"))
         
       }
@@ -152,17 +154,15 @@ shinyServer(function(input, output,session) {
                   cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8, 
                   #custom labels
                   vlcex=1) 
-      legend(1.4, 1.25, legend = rownames(tab2_bonds), 
-             col = colors_border, seg.len = 2, 
-             border = "transparent", pch = 16, lty = 1)
+      legend(1.1, 1.1, legend = rownames(tab2_bonds), 
+             col = colors_border, 
+             seg.len = 2, border = "transparent",
+             pch = 16, lty = 1)
+      
+     
+      
       
     })
-    
-    
-    
-    
-    
-    
     
     output$auto<- renderPlot({
       

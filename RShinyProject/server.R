@@ -127,6 +127,30 @@ shinyServer(function(input, output,session) {
   
     })
     
+
+    observe({
+      
+      updateCheckboxGroupInput(
+        session, 'checkbox', choices =list(
+          
+          'Daniel Craig (2006-2020)'='Daniel.Craig',
+          'Pierce Brosnan (1995-2002)'='Pierce.Brosnan',
+          'Timothy Dalton (1987-1989)'='Timothy.Dalton',
+          'Roger Moore (1973-1985)'='Roger.Moore',
+          'Sean Connery (1962-1971)'='Sean.Connery',
+          'George Lazenby (1969)'= 'George.Lazenby'
+          
+        ),
+        selected = if(input$all) c('Daniel.Craig',
+                                   'George.Lazenby',
+                                   'Pierce.Brosnan',
+                                   'Roger.Moore',
+                                   'Sean.Connery',
+                                   'Timothy.Dalton')
+      )
+    }
+    
+    )
     
     df<-reactive({
       tab2_bonds %>% select(input$checkbox)
@@ -140,29 +164,94 @@ shinyServer(function(input, output,session) {
       }
     })
     
+    output$bonds<-renderImage({
+      par(bg = "black")
+      if(length(df())==2|length(df())==0){
+        return(list(
+          src = "www/combine.png",
+          contentType = "image/png",
+          width=600,
+          heigt=600
+          
+        ))
+      }else if(length(df())==1&input$checkbox=='Daniel.Craig'){
+        
+        list(src = "www/Daniel.png",
+             contentType = "image/png",
+             width=200,
+             heigt=600)
+      }
+      else if(length(df())==1&input$checkbox=='Pierce.Brosnan'){
+        
+        list(src = "www/Pierce.png",
+             contentType = "image/png",
+             width=100,
+             heigt=600)
+      }else if(length(df())==1&input$checkbox=='Timothy.Dalton'){
+        
+        list(src = "www/Timothy.png",
+             contentType = "image/png",
+             width=150,
+             heigt=700)
+      }else if(length(df())==1&input$checkbox=='Roger.Moore'){
+        
+        list(src = "www/Roger.png",
+             contentType = "image/png",
+             width=200,
+             heigt=600)
+      }else if(length(df())==1& input$checkbox=='Sean.Connery'){
+        
+        list(src = "www/Sean.png",
+             contentType = "image/png",
+             width=100,
+             heigt=500)
+      }else if(length(df())==1&input$checkbox=='George.Lazenby'){
+        
+        list(src = "www/George.png",
+             contentType = "image/png",
+             width=100,
+             heigt=600)
+      } else if(length(df())>2){
+        outfile <- tempfile(fileext='.png')
+        list(
+          src = outfile
+        )
+      }
+    },deleteFile = FALSE)
+    
     
     output$radarplot<-renderPlot({
-      coul <- brewer.pal(10, "RdBu")
-      colors_in <- alpha(coul,0.3)
-      
-      
-      colors_border <- coul
-      par(bg = "black")
-      radarchart( df(), axistype=0 , maxmin=F,
-                  #custom polygon
-                  pcol=colors_border , pfcol=colors_in,plwd=3, plty=2,
-                  #custom the grid
-                  cglcol="white", cglty=1, axislabcol="white", cglwd=0.8,
-                  
-                  #custom labels
-                  vlcex=1) 
-      
-      legend(1.1, 1.1, legend = rownames(tab2_bonds), 
-             col = colors_border, text.col = "white",
-             seg.len = 2, border = "transparent",
-             pch = 16, lty = 1)
-      
-     
+      if(length(df())<3){
+        
+        ggplot()+
+          theme(
+            panel.grid = element_line(color = "#000000"),
+            panel.background = element_rect(fill = "#000000", color = "#000000"),
+            plot.background = element_rect(fill = "#000000", color = "#000000"))
+      }else{
+        
+        coul <- brewer.pal(8, "RdBu")
+        colors_in <- alpha(coul,0.3)
+        
+        
+        colors_border <- coul
+        par(bg = "black",col="white")
+        radarchart( df(), axistype=0 , maxmin=F,
+                    
+                    #custom polygon
+                    pcol=colors_border , pfcol=colors_in,plwd=3, plty=c(1,3,4),
+                    #custom the grid
+                    cglcol="white", cglty=1, axislabcol="white", cglwd=0.8,
+                    
+                    #custom labels
+                    vlcex=1) 
+        
+        legend(1.1, 1.1, legend = rownames(tab2_bonds), 
+               col = colors_border, text.col = "white",
+               seg.len = 2, border = "transparent",
+               pch = 16, lty = 1)
+        
+      }
       
       
     })

@@ -26,6 +26,8 @@ library(fmsb)
 library(RColorBrewer)
 library(scales)
 
+library(d3treeR)
+
 
 
 library(ggvis)
@@ -119,3 +121,26 @@ tab2_bonds<-data.frame(t(tab2_bonds))
 tab2_bonds<-tab2_bonds[-1,] 
 
 tab2_bonds[] <-lapply(tab2_bonds, function(x) as.numeric(as.character(x)))
+
+
+Coolcars$Brand <- gsub("([A-Za-z]+).*", "\\1", Coolcars$Vehicle)
+test_car <- Coolcars %>% group_by(Vehicle) %>% tally()
+Car <- left_join(Coolcars, test_car, by = c("Vehicle", "Vehicle"))
+Car <- Car %>% filter(!Brand %in% "Chinese")
+
+
+# basic treemap
+p <- treemap(Car,
+             index=c("Brand","Vehicle"),
+             vSize="n",
+             type="value",
+             palette = "Set2",
+             bg.labels=c("white"),
+             align.labels=list(
+               c("center", "center"), 
+               c("right", "bottom")
+             ),
+            # position.legend = "none",
+             lowerbound.cex.labels = 0.4,
+             inflate.labels = TRUE
+)            

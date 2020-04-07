@@ -50,18 +50,19 @@ shinyUI(fluidPage(theme=shinytheme("cyborg"),tagList(
                  sidebarLayout(
                      sidebarPanel(
                          
-                         
+                         style = "font-size: 12pt; line-height: 30pt; width = 100",
                          checkboxGroupInput(
                              inputId = "checkbox",
                              h4("Actors"),
                              choices = list(
+                    
                                  
-                                 'Daniel Craig'='Daniel.Craig',
-                                 'George Lazenby'= 'George.Lazenby',
-                                 'Pierce Brosnan'='Pierce.Brosnan',
-                                 'Roger Moore'='Roger.Moore',
-                                 'Sean Connery'='Sean.Connery',
-                                 'Timothy Dalton'='Timothy.Dalton'
+                                 'Daniel Craig (2006-2020)'='Daniel.Craig',
+                                 'Pierce Brosnan (1995-2002)'='Pierce.Brosnan',
+                                 'Timothy Dalton (1987-1989)'='Timothy.Dalton',
+                                 'Roger Moore (1973-1985)'='Roger.Moore',
+                                 'Sean Connery (1962-1971)'='Sean.Connery',
+                                 'George Lazenby (1969)'= 'George.Lazenby'
                              ),
                              selected =  c('Daniel.Craig',
                                            'George.Lazenby',
@@ -70,15 +71,20 @@ shinyUI(fluidPage(theme=shinytheme("cyborg"),tagList(
                                            'Sean.Connery',
                                            'Timothy.Dalton')
                          ),
+                         checkboxInput("all","Select All",value = TRUE),
                          uiOutput("selected_num")
                      ),
                      
                      mainPanel(
+                         style="position:fixed;margin-left:32vw;",
                          fluidPage(fluidRow(
                              
-                             plotOutput(
-                                 "radarplot", width = "700px", height = "600px"
-                             ))
+                             column(1,
+                                    plotOutput(
+                                        "radarplot", width = "700px", height = "600px"
+                                    )),
+                             column(11,
+                                    imageOutput("bonds")))
                          ))
                  )),
         

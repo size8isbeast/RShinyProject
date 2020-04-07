@@ -94,17 +94,19 @@ shinyUI(fluidPage(theme=shinytheme("cyborg"),tagList(
                                 
                             ))
                    ),tabPanel("Country",
-                              fluidPage(fluidRow(
-                                  column(6,
-                                         plotOutput(
-                                             "country", width = "700px", height = "600px"
-                                         )),
-                                  column(6,
-                                         p("This is text for country"
-                                           
-                                         ))
+                              fluidPage(
+                                  fluidRow(
+                                      column(
+                                          width = 4, 
+                                          DT::dataTableOutput("testoutput")
+                                      ), 
+                                      column(
+                                          width = 8, 
+                                          leafletOutput("country", width = "1200px", height = "1000px")
+                                      )
+                                  )
                               )
-                              )
-                   ))
+                   )
+                   )
     )
 ))

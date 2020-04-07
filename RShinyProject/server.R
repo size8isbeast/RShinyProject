@@ -10,7 +10,7 @@
 library(shiny)
 
 library(DT)
-source("global.R")
+
 
 
 shinyServer(function(input, output,session) {
@@ -167,39 +167,68 @@ shinyServer(function(input, output,session) {
       
     })
     
-    output$auto<- renderPlot({
-      
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2]
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-      
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
-      
-      
-      
-      
-    })
-    
-    output$country<- renderPlot({
-      
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2]
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-      
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
-      
-      
-      
-      
-    })
-    
+    # For the automobile part 
     output$Car <- renderD3tree2({
       
-      d3tree2(p, width = "80%",valueField = "size", height ="600px", rootname = "Favorite Brands")
+      d3tree2(p, width = "80%",valueField = "size", height ="600px", 
+              rootname = "Favorite Brands")
       
       }) 
+    
+    # For the country part 
+    output$country <- renderLeaflet({
+      
+      # generate bins based on input$bins from ui.R
+      # ggplot()+
+      #   geom_map(data=country_data,  map= country_data, 
+      #            aes(x=long, y=lat, group=group, map_id=region), 
+      #            fill="white", colour="#7f7f7f")+
+      #   geom_map(data=country_map, map=country_data, 
+      #            aes(fill=Freq, map_id=region), colour="#7f7f7f")+
+      #   scale_fill_continuous(low="thistle2", high="darkred", guide="colorbar")+
+      #   theme_bw()
+      
+      # mapState <- map("world", fill=TRUE, plot=FALSE)
+      country_map %>% dataframeToPolygons("lat", "long", "group", freq) %>%
+        leaflet() %>%
+        addTiles(options=tileOptions(minZoom = 1, maxZoom = 8)) %>%
+        leaflet::addPolygons(
+          weight = 1,
+          opacity = 1, 
+          fillColor = ~pal2(freq),
+          color = "black",
+          dashArray = "3",
+          fillOpacity = 0.7,
+          highlight = highlightOptions(
+            weight = 1,
+            color = "#666",
+            dashArray = "",
+            fillOpacity = 0.7,
+            bringToFront = TRUE),
+          label = region,
+          labelOptions = labelOptions(
+            style = list("font-weight" = "normal", padding = "3px 8px"),
+            textsize = "15px",
+            direction = "auto")
+        ) %>%
+        addLegend(pal = pal2, values = freq, opacity = 0.7, title = NULL,
+                  position = "topleft")
+    })
+    v <- reactiveValues()
+    
+    observeEvent(input$country_shape_click, { 
+      p <- input$country_shape_click
+      country_name <- map.where(database="world", p$lng, p$lat)
+      country_name <- str_split(country_name, ":")[[1]][1]
+      v$country <- country_name
+    })
+    
+    output$testoutput <- DT::renderDataTable({
+      film <- unique(dat[dat$country == v$country, ])
+      DT::datatable(film)%>%
+        formatStyle(names(film),  
+                    color = 'white', backgroundColor = 'black', fontWeight = 'bold')
+    })
     
     
 })

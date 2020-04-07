@@ -10,7 +10,7 @@
 library(shiny)
 
 library(DT)
-
+source("global.R")
 
 
 shinyServer(function(input, output,session) {

@@ -27,7 +27,7 @@ library(RColorBrewer)
 library(scales)
 
 library(d3treeR)
-
+library(treemap)
 
 
 library(ggvis)
@@ -47,7 +47,7 @@ axis_vars <- c(
 #read csvs
 movies <- read_csv("www/data/tmdb_5000_movies.csv", na="NA")
 credits <- read_csv("www/data/tmdb_5000_credits.csv",  na="NA")
-oscars <- read_csv("www/data/oscar.csv",  na="NA")
+oscars <- read_csv("www/data/OScar.csv",  na="NA")
 Coolcars <- read_csv("www/data/cars.csv")
 Kills <- read_csv("www/data/Kills per Bond movie.csv",  na="NA")
 
@@ -134,8 +134,12 @@ p <- treemap(Car,
              index=c("Brand","Vehicle"),
              vSize="n",
              type="value",
-             palette = "Set2",
-             bg.labels=c("white"),
+             palette =  c(
+               "#004225",
+               "#f2f3f4",
+               "#002e63",
+               "#c0c0c0"), #grey
+             bg.labels=c("#0f0f0f"),
              align.labels=list(
                c("center", "center"), 
                c("right", "bottom")

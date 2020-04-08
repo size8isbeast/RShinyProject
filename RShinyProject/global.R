@@ -1,9 +1,17 @@
-# The following code refered from  
+# The code refered from  
+#Movie Comparsion
 #Author:Winston Chang <winston@rstudio.com>
 #AuthorUrl: http://www.rstudio.com/
 # License: MIT
 # Type: Shiny
 # Tags: ggvis 
+
+#The Bonds
+#Author:aagarw30 <aagarw30@gmail.com>
+#AuthorUrl:https://github.com/aagarw30/R-Shinyapp-Tutorial/blob/master/SelectAll_None_Choices/selectall2.R
+#Type: Shiny
+#Tags: R-Shinyapp-Tutorial
+
 
 
 
@@ -219,4 +227,7 @@ pal2 <- colorFactor(
   palette = c('white', 'yellow', 'red'),
   domain = freq
 )
+
+
+
 

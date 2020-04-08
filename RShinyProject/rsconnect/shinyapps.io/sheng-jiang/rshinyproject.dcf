@@ -1,0 +1,10 @@
+name: rshinyproject
+title:
+username:
+account: sheng-jiang
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2077188
+bundleId: 2984048
+url: https://sheng-jiang.shinyapps.io/rshinyproject/
+when: 1586305355.72421
